@@ -1,7 +1,9 @@
-let socket = require('socket.io-client')
-let config = require('../config');
-let server = require('../index');
-let log = require('../log');
+let socket = require('socket.io-client');
+let config = require('../../config');
+let logHelper = require('../unit/helper.logger');
+let server = require('../../index');
+
+after(() => server.app.close());
 
 exports.createClient = () => {
   let client = socket(
@@ -26,24 +28,7 @@ exports.createClient = () => {
   return client;
 }
 
-exports.stubLogger = (sandbox, shallow) => {
-  let child = sandbox.stub(log, 'child');
-
-  if (shallow) {
-    return child;
-  }
-
-  let out = {
-    error: sandbox.stub(),
-    warn: sandbox.stub(),
-    info: sandbox.stub(),
-    debug: sandbox.stub()
-  }
-
-  child.returns(out);
-  return out;
-}
-
+exports.stubLogger = logHelper.stub; 
 
 exports.delay = (time) => {
   return new Promise((resolve) => {

@@ -1,26 +1,20 @@
 let assert = require('assert')
 let sinon = require('sinon');
+let server = require('./helper.server');
 
-let server;
-
-before(() => server = require('./helper.server'));
-
-after(() => server.app.close());
-
-describe('Server', () => {
-  let log = require('../log');
+describe('Server (Server)', () => {
   let client;
   let sandbox;
   let logStubs;
 
-  afterEach(() => {
-    sandbox.restore();
-    return client.closeAsync();
-  });
-
   beforeEach(() => {
     client = server.createClient();
     sandbox = sinon.sandbox.create();
+  });
+
+  afterEach(() => {
+    sandbox.restore();
+    return client.closeAsync();
   });
 
   it('client should connect successfully', () => {
