@@ -29,7 +29,7 @@ describe('Deploy (Server)', () => {
 
       return client.connectAsync()
       .then(() => client.emit(key, assertPayload))
-      .then(() => server.delay(10))
+      .then(() => server.delay(20))
       .then(() => {
         assert.ok(stub.called);
         assert.deepEqual(stub.firstCall.args[1], assertPayload);
