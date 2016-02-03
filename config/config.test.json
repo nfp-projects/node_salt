@@ -1,5 +1,13 @@
 {
   "server": {
     "port": 9876
+  },
+  "bunyan": {
+    "name": "pckg.name",
+    "streams": [{
+        "stream": "process.stdout",
+        "level": "error"
+      }
+    ]
   }
 }
