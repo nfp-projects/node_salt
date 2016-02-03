@@ -1,0 +1,38 @@
+{
+  "name": "node_salt",
+  "version": "1.0.0",
+  "description": "Micro API Service to run salt commands remotely",
+  "main": "index.js",
+  "scripts": {
+    "test": "env NODE_ENV=test mocha --recursive --use_strict"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nfp-projects/node_salt.git"
+  },
+  "keywords": [
+    "API",
+    "salt",
+    "saltstack",
+    "service",
+    "micro",
+    "service"
+  ],
+  "author": "Jonatan Nilsson",
+  "license": "WTFPL",
+  "bugs": {
+    "url": "https://github.com/nfp-projects/node_salt/issues"
+  },
+  "homepage": "https://github.com/nfp-projects/node_salt#readme",
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "chai-as-promised": "^5.2.0",
+    "mocha": "^2.4.5",
+    "sinon": "^1.17.3"
+  },
+  "dependencies": {
+    "lodash": "^4.2.0",
+    "nconf": "^0.8.3",
+    "socket.io": "^1.4.5"
+  }
+}
