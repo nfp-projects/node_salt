@@ -1,9 +1,9 @@
-let assert = require('assert')
-let sinon = require('sinon')
-let server = require('../helper.server')
+const assert = require('assert')
+const sinon = require('sinon')
+const server = require('../helper.server')
 
 describe('Deploy (Server)', () => {
-  let handlers = require('../../server/deploy/handlers')
+  const handlers = require('../../server/deploy/handlers')
   let client
   let sandbox
 

@@ -1,4 +1,4 @@
-let sinon = require('sinon')
+const sinon = require('sinon')
 
 describe('Salt', () => {
   let sandbox

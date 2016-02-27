@@ -1,5 +1,5 @@
-let config = require('../../config')
-let salt = require('../salt/run')
+const config = require('../../config')
+const salt = require('../salt/run')
 
 exports.latest = (ctx, data) => {
   if (!data) return

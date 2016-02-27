@@ -1,5 +1,6 @@
-let _ = require('lodash')
-let nconf = require('nconf')
+const _ = require('lodash')
+const nconf = require('nconf')
+const pckg = require('./package.json')
 
 
 // Config follow the following priority check order:
@@ -15,19 +16,18 @@ nconf.argv()
 
 
 // Load package.json for name and such
-let pckg = require('./package.json')
-pckg = _.pick(pckg, ['name', 'version', 'description', 'author', 'license', 'homepage'])
+let project = _.pick(pckg, ['name', 'version', 'description', 'author', 'license', 'homepage'])
 
 
 // If we have global.it, there's a huge chance
 // we're in test mode so we force node_env to be test.
 if (typeof global.it === 'function') {
-  pckg.NODE_ENV = 'test'
+  project.NODE_ENV = 'test'
 }
 
 
 // Load overrides as second priority
-nconf.overrides(pckg)
+nconf.overrides(project)
 
 
 // Load enviroment variables as third priority
@@ -50,7 +50,7 @@ nconf.defaults({
     port: 3000,
   },
   bunyan: {
-    name: pckg.name,
+    name: project.name,
     streams: [
       {
         stream: 'process.stdout',

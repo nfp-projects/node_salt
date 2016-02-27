@@ -1,6 +1,6 @@
-let assert = require('assert')
-let sinon = require('sinon')
-let server = require('./helper.server')
+const assert = require('assert')
+const sinon = require('sinon')
+const server = require('./helper.server')
 
 describe('Server (Server)', () => {
   let client

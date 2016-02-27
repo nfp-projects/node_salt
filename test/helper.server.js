@@ -1,7 +1,7 @@
-let socket = require('socket.io-client')
-let config = require('../config')
-let logHelper = require('./helper.logger')
-let server = require('../index')
+const socket = require('socket.io-client')
+const config = require('../config')
+const logHelper = require('./helper.logger')
+const server = require('../index')
 
 after(() => server.app.close())
 

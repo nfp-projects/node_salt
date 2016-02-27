@@ -1,4 +1,4 @@
-let child = require('child_process')
+const child = require('child_process')
 
 exports.exec = (command, options) =>
   new Promise((resolve, reject) =>

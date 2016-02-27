@@ -1,4 +1,4 @@
-let log = require('../log')
+const log = require('../log')
 
 exports.stub = (sandbox, shallow) => {
   let child = sandbox.stub(log, 'child')

@@ -1,5 +1,5 @@
-let logger = require('../log')
-let deploy = require('./deploy/handlers')
+const logger = require('../log')
+const deploy = require('./deploy/handlers')
 
 module.exports = (io, socket) => {
   let log = logger.child({
