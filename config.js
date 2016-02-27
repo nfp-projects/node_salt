@@ -1,5 +1,5 @@
-let _ = require('lodash');
-let nconf = require('nconf');
+let _ = require('lodash')
+let nconf = require('nconf')
 
 
 // Config follow the following priority check order:
@@ -10,41 +10,40 @@ let nconf = require('nconf');
 // 5. default settings
 
 
-//Load arguments as highest priority
-nconf.argv();
+// Load arguments as highest priority
+nconf.argv()
 
 
-//Load package.json for name and such
-var pckg = require('./package.json');
-pckg = _.pick(pckg, ['name','version','description','author','license','homepage']);
+// Load package.json for name and such
+let pckg = require('./package.json')
+pckg = _.pick(pckg, ['name', 'version', 'description', 'author', 'license', 'homepage'])
 
 
-//If we have global.it, there's a huge chance
-//we're in test mode so we force node_env to be test.
+// If we have global.it, there's a huge chance
+// we're in test mode so we force node_env to be test.
 if (typeof global.it === 'function') {
-  pckg.NODE_ENV = 'test';
+  pckg.NODE_ENV = 'test'
 }
 
 
-//Load overrides as second priority
-nconf.overrides(pckg);
+// Load overrides as second priority
+nconf.overrides(pckg)
 
 
-//Load enviroment variables as third priority
-nconf.env();
+// Load enviroment variables as third priority
+nconf.env()
 
 
-//Load any overrides from the appropriate config file
+// Load any overrides from the appropriate config file
 if (nconf.get('NODE_ENV') === 'test') {
-  //Load the config test file if we're in test mode
-  nconf.file('config/config.test.json');
-}
-else {
-  //Otherwise load from config.json if it exists.
-  nconf.file('config/config.json');
+  // Load the config test file if we're in test mode
+  nconf.file('config/config.test.json')
+} else {
+  // Otherwise load from config.json if it exists.
+  nconf.file('config/config.json')
 }
 
-//Default variables for required database and other settings.
+// Default variables for required database and other settings.
 nconf.defaults({
   NODE_ENV: 'development',
   server: {
@@ -52,12 +51,13 @@ nconf.defaults({
   },
   bunyan: {
     name: pckg.name,
-    streams: [{
+    streams: [
+      {
         stream: 'process.stdout',
-        level: 'debug'
-      }
-    ]
+        level: 'debug',
+      },
+    ],
   },
-});
+})
 
-module.exports = nconf;
+module.exports = nconf

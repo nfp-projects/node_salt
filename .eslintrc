@@ -1,0 +1,31 @@
+{
+  "extends": "airbnb/base",
+  "ecmaFeatures": {
+      "modules": false
+  },
+  "plugins": [
+    "mocha"
+  ],
+  "rules": {
+    "mocha/no-exclusive-tests": 2,
+    "semi": [2, "never"],
+    "max-len": [1, 120],
+    "prefer-const": 0,
+    "consistent-return": 0,
+    "no-param-reassign": [2, {"props": false}],
+    "no-unused-vars": [
+      2,
+      {
+        "args": "none"
+      }
+    ]
+  },
+  "globals": {
+    "describe": false,
+    "it": false,
+    "before": false,
+    "beforeEach": false,
+    "after": false,
+    "afterEach": false
+  }
+}

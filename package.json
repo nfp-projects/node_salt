@@ -4,6 +4,9 @@
   "description": "Micro API Service to run salt commands remotely",
   "main": "index.js",
   "scripts": {
+    "lint": "eslint .",
+    "coverage-report": "npm run coverage && babel-node node_modules/.bin/babel-istanbul report html",
+    "coverage": "env NODE_ENV=test babel-node node_modules/.bin/babel-istanbul cover _mocha --check-coverage -- --compilers js:babel-register --recursive -R spec",
     "test": "env NODE_ENV=test mocha --recursive --use_strict"
   },
   "repository": {
@@ -25,13 +28,18 @@
   },
   "homepage": "https://github.com/nfp-projects/node_salt#readme",
   "devDependencies": {
+    "assert-extended": "^1.0.0",
     "chai": "^3.5.0",
     "chai-as-promised": "^5.2.0",
+    "eslint": "^2.2.0",
+    "eslint-config-airbnb": "^6.0.2",
+    "eslint-plugin-mocha": "^2.0.0",
     "mocha": "^2.4.5",
     "sinon": "^1.17.3"
   },
   "dependencies": {
     "bunyan": "^1.5.1",
+    "child-process-promise": "^1.1.0",
     "lodash": "^4.2.0",
     "nconf": "^0.8.3",
     "socket.io": "^1.4.5",
