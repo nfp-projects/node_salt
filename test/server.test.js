@@ -27,7 +27,11 @@ describe('Server', () => {
     client.connectAsync()
     .then(() => {
       client.emit('ping_test')
-      return new Promise((resolve) => client.on('pong_test', resolve))
+      return new Promise((resolve) => client.on('server_log', resolve))
+    })
+    .then((data) => {
+      assert.strictEqual(data.level, 30)
+      assert.strictEqual(data.message, 'pong')
     })
   )
 

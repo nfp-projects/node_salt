@@ -8,6 +8,15 @@ exports.stub = (sandbox, shallow) => {
   }
 
   let out = {
+    fatal: sandbox.stub(),
+    error: sandbox.stub(),
+    warn: sandbox.stub(),
+    info: sandbox.stub(),
+    debug: sandbox.stub(),
+  }
+
+  out.socket = {
+    fatal: sandbox.stub(),
     error: sandbox.stub(),
     warn: sandbox.stub(),
     info: sandbox.stub(),

@@ -11,6 +11,8 @@ exports.latest = (ctx, data) => {
       data,
       'Project is not being watched, ignoring'
     )
+    ctx.log.socket.info(`Could not find project '${data.name}', ignoring request.`)
+
     return
   }
 

@@ -30,8 +30,29 @@ function listenAllEvents() {
 
   client.on('*', (event, data) => {
     console.log()
-    process.stdout.write(`${clc.blueBright(event)}: `)
-    console.log(JSON.stringify(data, null, 2))
+    if (event === 'server_log') {
+      if (data.level >= 10 && data.level < 20) {
+        console.log(`DEBUG: ${data.message}`)
+      }
+      if (data.level >= 20 && data.level < 30) {
+        console.log(`DEBUG: ${data.message}`)
+      }
+      if (data.level >= 30 && data.level < 40) {
+        console.log(clc.cyan(`INFO: ${data.message}`))
+      }
+      if (data.level >= 40 && data.level < 50) {
+        console.log(clc.magenta(`WARN: ${data.message}`))
+      }
+      if (data.level >= 50 && data.level < 60) {
+        console.log(clc.red(`ERROR: ${data.message}`))
+      }
+      if (data.level >= 60) {
+        console.log(clc.redBright(`FATAL: ${data.message}`))
+      }
+    } else {
+      process.stdout.write(`${clc.blueBright(event)}: `)
+      console.log(JSON.stringify(data, null, 2))
+    }
     process.stdout.write('> ')
   })
 }

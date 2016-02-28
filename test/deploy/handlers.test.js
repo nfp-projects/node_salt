@@ -37,11 +37,15 @@ describe('Deploy (Handlers)', () => {
       let assertPayload = { name: 'test', branch: 'master' }
       handlers.latest(context, assertPayload)
       assert.ok(context.log.info.called)
+      assert.ok(context.log.socket.info.called)
+
       assert.ok(!runStub.called)
       assert.strictEqual(
         context.log.info.firstCall.args[0],
         assertPayload
       )
+      assert.match(context.log.socket.info.firstCall.args[0], new RegExp(assertPayload.name))
+      assert.match(context.log.socket.info.firstCall.args[0], /ignor/)
     })
 
     it('should log if project branch is not in config', () => {
