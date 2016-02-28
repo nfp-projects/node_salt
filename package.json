@@ -28,12 +28,14 @@
   },
   "homepage": "https://github.com/nfp-projects/node_salt#readme",
   "devDependencies": {
-    "assert-extended": "^1.0.0",
+    "assert-extended": "^1.0.1",
     "chai": "^3.5.0",
     "chai-as-promised": "^5.2.0",
+    "cli-color": "^1.1.0",
     "eslint": "^2.2.0",
     "eslint-config-airbnb": "^6.0.2",
     "eslint-plugin-mocha": "^2.0.0",
+    "minimist": "^1.2.0",
     "mocha": "^2.4.5",
     "sinon": "^1.17.3"
   },

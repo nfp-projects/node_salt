@@ -1,4 +1,4 @@
-const assert = require('assert')
+const assert = require('assert-extended')
 const sinon = require('sinon')
 const server = require('../helper.server')
 
@@ -18,7 +18,7 @@ describe('Deploy (Server)', () => {
   })
 
   let map = {
-    deploy_latest: 'latest',
+    'deploy.latest': 'latest',
   }
 
   Object.keys(map).forEach(key => {

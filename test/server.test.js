@@ -1,8 +1,10 @@
-const assert = require('assert')
+const assert = require('assert-extended')
 const sinon = require('sinon')
 const server = require('./helper.server')
 
-describe('Server (Server)', () => {
+describe('Server', () => {
+  const manager = require('../server/manager/handlers')
+
   let client
   let sandbox
   let logStubs
@@ -34,14 +36,23 @@ describe('Server (Server)', () => {
     let infoStub = sandbox.stub()
     child.returns({ info: infoStub })
 
-
     return client.connectAsync()
     .then(() => {
-      assert.ok(child.called)
+      assert.strictEqual(child.callCount, 1)
 
       let args = child.firstCall.args[0]
       assert.ok(args.ip.match(/127\.0\.0\.1/))
+      assert.strictEqual(args.id, `/#${client.id}`)
     })
+  })
+
+  it('should call manager about new connection', () => {
+    let stubManager = sandbox.stub(manager, 'newConnection')
+
+    return client.connectAsync()
+    .then(() =>
+      assert.ok(stubManager.called)
+    )
   })
 
   it('should call logger on disconnect', () => {

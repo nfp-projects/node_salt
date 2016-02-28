@@ -1,6 +1,5 @@
-const assert = require('assert')
+const assert = require('assert-extended')
 const sinon = require('sinon')
-require('assert-extended')
 
 describe('Shell', () => {
   const child = require('child_process')

@@ -1,8 +1,8 @@
 const EventEmitter = require('events')
-const assert = require('assert')
+const assert = require('assert-extended')
 const sinon = require('sinon')
 
-describe('Deploy', () => {
+describe('Deploy (Handlers)', () => {
   const handlers = require('../../server/deploy/handlers')
   const salt = require('../../server/salt/run')
   const config = require('../../config')

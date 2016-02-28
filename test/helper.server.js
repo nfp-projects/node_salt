@@ -8,12 +8,17 @@ after(() => server.app.close())
 exports.createClient = () => {
   let client = socket(
     `http://localhost:${config.get('server:port')}`,
-    { reconnection: false })
+    {
+      reconnection: false,
+      multiplex: false,
+    })
 
   client.connectAsync = () =>
     new Promise((resolve, reject) => {
+      if (client.connected) return resolve()
       client.on('connect_error', reject)
       client.on('connect', resolve)
+      client.connect()
     })
 
   client.closeAsync = () =>
@@ -34,7 +39,6 @@ exports.delay = (time) =>
       resolve()
     }, time)
   })
-
 
 exports.io = server.io
 exports.app = server.app
