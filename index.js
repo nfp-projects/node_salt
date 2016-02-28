@@ -1,3 +1,6 @@
+'use strict'
+require('use-strict')
+
 const http = require('http')
 const socket = require('socket.io')
 const config = require('./config')
