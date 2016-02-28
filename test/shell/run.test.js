@@ -32,15 +32,17 @@ describe('Shell', () => {
     it('child exec erroring should reject with ctx', () => {
       const assertStdOut = 'this is out'
       const assertStdErr = 'this is err'
+      const assertError = new Error('message')
 
       execStub.yields(
-        new Error('message'),
+        assertError,
         assertStdOut,
         assertStdErr
       )
 
       return assert.isRejected(shell.exec(''))
         .then((err) => {
+          assert.strictEqual(err.error, assertError)
           assert.strictEqual(err.out, assertStdOut)
           assert.strictEqual(err.err, assertStdErr)
         })
