@@ -13,6 +13,6 @@ exports.run = (ctx, servers, command) => {
     })
     .catch((err) => {
       ctx.log.error(err)
-      ctx.io.emit('salt_failed')
+      ctx.io.emit('salt_failed', { message: err.error.message })
     })
 }

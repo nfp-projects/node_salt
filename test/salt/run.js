@@ -80,7 +80,8 @@ describe('Salt', () => {
     })
 
     it('should send salt_failed if failed and log result', () => {
-      const assertResult = new Error('hello test')
+      const assertErrorMessage = 'hello test'
+      const assertResult = { error: new Error(assertErrorMessage) }
       stubExec.rejects(assertResult)
 
       return new Promise((resolve) => {
@@ -88,7 +89,8 @@ describe('Salt', () => {
 
         salt.run(context, testServers, testCommand)
       })
-      .then(() => {
+      .then((payload) => {
+        assert.strictEqual(payload.message, assertErrorMessage)
         assert.ok(context.log.error.called)
         assert.strictEqual(context.log.error.firstCall.args[0], assertResult)
       })
