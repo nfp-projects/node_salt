@@ -16,5 +16,5 @@ exports.latest = (ctx, data) => {
     return
   }
 
-  salt.run(ctx, servers, `sls.apply deploy.${data.name}`)
+  salt.run(ctx, servers, `state.apply deploy.${data.name}`)
 }

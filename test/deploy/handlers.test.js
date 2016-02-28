@@ -71,7 +71,7 @@ describe('Deploy (Handlers)', () => {
     })
 
     it('should call salt with correct command', () => {
-      const assertCommand = new RegExp('sls\\.apply.+deploy\\.test')
+      const assertCommand = new RegExp('state\\.apply.+deploy\\.test')
       config.set('projects:test:master', 'test')
       handlers.latest(context, { name: 'test', branch: 'master' })
 
