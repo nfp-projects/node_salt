@@ -6,6 +6,6 @@ exports.exec = (command, options) =>
       if (error) {
         return reject({ out, err })
       }
-      resolve()
+      resolve({ out, err })
     })
   )

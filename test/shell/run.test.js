@@ -41,7 +41,25 @@ describe('Shell', () => {
 
       return assert.isRejected(shell.exec(''))
         .then((err) => {
-          assert.strictEqual()
+          assert.strictEqual(err.out, assertStdOut)
+          assert.strictEqual(err.err, assertStdErr)
+        })
+    })
+
+    it('child exec success should return all data', () => {
+      const assertStdOut = 'this is out'
+      const assertStdErr = 'this is err'
+
+      execStub.yields(
+        null,
+        assertStdOut,
+        assertStdErr
+      )
+
+      return assert.isFulfilled(shell.exec(''))
+        .then((data) => {
+          assert.strictEqual(data.out, assertStdOut)
+          assert.strictEqual(data.err, assertStdErr)
         })
     })
   })
