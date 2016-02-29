@@ -121,7 +121,6 @@ listenAllEvents()
 
 client.on('connect_error', () => {
   console.log(clc.red('Unable to connect to server'))
-  process.exit(1)
 })
 
 client.on('disconnect', () => {
