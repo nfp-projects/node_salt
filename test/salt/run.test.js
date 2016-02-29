@@ -3,10 +3,11 @@ const assert = require('assert-extended')
 const sinon = require('sinon')
 require('sinon-as-promised')
 
-describe('Salt', () => {
+describe('Salt (Run)', () => {
   const logHelper = require('../helper.logger')
   const salt = require('../../server/salt/run')
   const shell = require('../../server/shell/run')
+  const constant = require('./const')
   let sandbox
   let context
   let stubExec
@@ -48,7 +49,7 @@ describe('Salt', () => {
     })
 
     it('should call shell.exec correctly and log it', () => {
-      const assertCommand = new RegExp(`salt ${testServers} ${testCommand}`)
+      const assertCommand = new RegExp(`salt ${testServers} ${testCommand} --out json --static`)
       stubExec.resolves()
 
       return salt.run(context, testServers, testCommand)
@@ -93,6 +94,28 @@ describe('Salt', () => {
         assert.strictEqual(payload.message, assertErrorMessage)
         assert.ok(context.log.error.called)
         assert.strictEqual(context.log.error.firstCall.args[0], assertResult)
+      })
+    })
+
+    it('should parse output json correctly on success', () => {
+      const assertData = JSON.parse(constant.no_changes)
+      stubExec.resolves({ out: constant.no_changes })
+
+      return new Promise((resolve) => {
+        context.io.once('salt_success', resolve)
+
+        salt.run(context, testServers, testCommand)
+      })
+      .then((data) => {
+        assert.ok(data)
+        for (let key of Object.keys(assertData)) {
+          assert.ok(data[key])
+          assert.strictEqual(data[key].service, false)
+          assert.strictEqual(data[key].npm, false)
+          assert.strictEqual(data[key].startup, false)
+          assert.strictEqual(data[key].project, false)
+          assert.strictEqual(data[key].config, false)
+        }
       })
     })
   })

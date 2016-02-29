@@ -13,6 +13,7 @@
     "prefer-const": 0,
     "consistent-return": 0,
     "no-param-reassign": [2, {"props": false}],
+    "no-use-before-define": [2, {"functions": false, "classes": true}],
     "no-unused-vars": [
       2,
       {
