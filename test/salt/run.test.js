@@ -8,15 +8,18 @@ describe('Salt (Run)', () => {
   const salt = require('../../server/salt/run')
   const shell = require('../../server/shell/run')
   const constant = require('./const')
+  const parser = require('../../server/salt/parser')
   let sandbox
   let context
   let stubExec
+  let stubParser
   let testServers
   let testCommand
 
   beforeEach(() => {
     sandbox = sinon.sandbox.create()
     stubExec = sandbox.stub(shell, 'exec')
+    stubParser = sandbox.stub(parser, 'parseData')
     testServers = 'db01,db02'
     testCommand = 'test.ping'
     context = {
@@ -34,7 +37,7 @@ describe('Salt (Run)', () => {
     it('should send salt_run to all on start', () => {
       const assertCommand = 'sls.something bla'
       const assertHosts = 'www1,www1'
-      stubExec.resolves()
+      stubExec.resolves({})
 
       return new Promise((resolve) => {
         context.io.once('salt_run', resolve)
@@ -50,7 +53,7 @@ describe('Salt (Run)', () => {
 
     it('should call shell.exec correctly and log it', () => {
       const assertCommand = new RegExp(`salt ${testServers} ${testCommand} --out json --static`)
-      stubExec.resolves()
+      stubExec.resolves({})
 
       return salt.run(context, testServers, testCommand)
       .then(() => {
@@ -97,9 +100,11 @@ describe('Salt (Run)', () => {
       })
     })
 
-    it('should parse output json correctly on success', () => {
-      const assertData = JSON.parse(constant.no_changes)
-      stubExec.resolves({ out: constant.no_changes })
+    it('should call parser and send it in salt_success', () => {
+      const assertOut = 'bla bla'
+      const assertOutput = { a: 1 }
+      stubExec.resolves({ out: assertOut })
+      stubParser.returns(assertOutput)
 
       return new Promise((resolve) => {
         context.io.once('salt_success', resolve)
@@ -108,14 +113,9 @@ describe('Salt (Run)', () => {
       })
       .then((data) => {
         assert.ok(data)
-        for (let key of Object.keys(assertData)) {
-          assert.ok(data[key])
-          assert.strictEqual(data[key].service, false)
-          assert.strictEqual(data[key].npm, false)
-          assert.strictEqual(data[key].startup, false)
-          assert.strictEqual(data[key].project, false)
-          assert.strictEqual(data[key].config, false)
-        }
+        assert.ok(stubParser.called)
+        assert.strictEqual(data, assertOutput)
+        assert.strictEqual(stubParser.firstCall.args[0], assertOut)
       })
     })
   })

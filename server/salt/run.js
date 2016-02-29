@@ -10,7 +10,7 @@ exports.run = (ctx, servers, command) => {
   return shell.exec(saltCommand)
     .then((result) => {
       ctx.log.info(result)
-      ctx.io.emit('salt_success', parser.parseData(result))
+      ctx.io.emit('salt_success', parser.parseData(result.out))
     })
     .catch((err) => {
       ctx.log.error(err)
