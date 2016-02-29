@@ -31,6 +31,9 @@ exports.parseEntry = (name, data) => {
   if (Object.keys(data.changes).length === 0) {
     return false
   }
+  if (name === 'config') {
+    return true
+  }
   if (name === 'project') {
     return data.changes.revision
   }

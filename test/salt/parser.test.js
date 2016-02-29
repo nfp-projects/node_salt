@@ -57,6 +57,20 @@ describe('Salt (Parser)', () => {
       assert.strictEqual(message, true)
     })
 
+    it('should return true for changes in config file', () => {
+      const assertMessage = 'Bla bla bla'
+      let message = parser.parseEntry('config', {
+        result: true,
+        comment: assertMessage,
+        changes: {
+          bla: 1,
+        },
+      })
+
+      assert.notStrictEqual(message, assertMessage)
+      assert.strictEqual(message, true)
+    })
+
     it('should return stderr and stdout for changes in service with result false', () => {
       const assertMessage = 'Bla bla bla'
       const assertOut = 'something'
