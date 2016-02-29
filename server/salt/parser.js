@@ -34,5 +34,15 @@ exports.parseEntry = (name, data) => {
   if (name === 'project') {
     return data.changes.revision
   }
+  if (name === 'service') {
+    if (data.result) {
+      return true
+    }
+    return {
+      error: true,
+      stderr: data.changes.stderr,
+      stdout: data.changes.stdout,
+    }
+  }
   return data.comment
 }
