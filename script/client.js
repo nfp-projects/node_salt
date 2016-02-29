@@ -116,7 +116,7 @@ if (!host) {
 }
 
 console.log('Connecting to:', clc.cyan(host))
-client = socket(host, { reconnection: false })
+client = socket(host, { reconnection: true })
 listenAllEvents()
 
 client.on('connect_error', () => {
@@ -127,7 +127,6 @@ client.on('connect_error', () => {
 client.on('disconnect', () => {
   console.log()
   console.log(clc.red('Disconnected from server'))
-  process.exit(0)
 })
 
 client.on('connect', () => {
