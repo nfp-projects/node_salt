@@ -15,7 +15,7 @@ describe('Salt (Parser)', () => {
       assert.strictEqual(out[assertHost].config, false)
     })
 
-    it('should handle errors in sls', () => {
+    it('should handle array result in sls', () => {
       let out = parser.parseData(`
 {
     "master01.nfp.local": [
@@ -25,6 +25,15 @@ describe('Salt (Parser)', () => {
 }`)
       assert.ok(out['master01.nfp.local'].error)
       assert.match(out['master01.nfp.local'].error, /Pillar failed to/)
+    })
+
+    it('should handle string result in sls', () => {
+      let test = `{
+    "master01.nfp.local": "Passed invalid arguments to state.apply: __init__() got an unexpected keyword argument 'mocked'\\n\\n    .. versionadded:: 2015.5.0\\n\\n    Apply states! This function will call highstate or state.sls based on the\\n    arguments passed in, state.apply is intended to be the main gateway for\\n    all state executions.\\n\\n    CLI Example:\\n\\n    .. code-block:: bash\\n\\n        salt '*' state.apply\\n        salt '*' state.apply test\\n        salt '*' state.apply test,pkgs\\n    "
+}`
+      let out = parser.parseData(test)
+      assert.ok(out['master01.nfp.local'].error)
+      assert.match(out['master01.nfp.local'].error, /Passed invalid arguments/)
     })
   })
 

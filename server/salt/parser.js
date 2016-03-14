@@ -7,6 +7,7 @@ exports.parseData = (data) => {
   try {
     parsed = JSON.parse(data)
   } catch (error) {
+    console.log(JSON.stringify(error.toString()))
     return out
   }
 
@@ -21,6 +22,8 @@ exports.parseData = (data) => {
 
     if (_.isArray(parsed[host])) {
       out[host].error = parsed[host].join(' ')
+    } else if (_.isString(parsed[host])) {
+      out[host].error = parsed[host]
     } else {
       for (let command of Object.keys(parsed[host])) {
         let name = command.match(/\|-([^_]+)_\|/)[1]
