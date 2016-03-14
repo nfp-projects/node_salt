@@ -18,3 +18,7 @@ exports.latest = (ctx, data) => {
 
   salt.run(ctx, servers, `state.apply deploy.${data.name}`)
 }
+
+exports.list = (ctx) => {
+  ctx.socket.emit('deploy_list', config.get('projects'))
+}

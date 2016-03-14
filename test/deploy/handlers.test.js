@@ -79,4 +79,33 @@ describe('Deploy (Handlers)', () => {
       assert.ok(command.match(assertCommand))
     })
   })
+
+  describe('#list()', () => {
+    let beforeConfig
+
+    before(() => {
+      beforeConfig = config.get('projects')
+    })
+
+    after(() => {
+      config.set('projects', beforeConfig)
+    })
+
+    it('should return everything in projects', () => {
+      let assertData = {
+        host1: { master: 'test' },
+        host2: { master: 'test' },
+      }
+      config.set('projects', assertData)
+
+      return new Promise((resolve) => {
+        context.socket.once('deploy_list', resolve)
+
+        handlers.list(context)
+      })
+      .then(payload => {
+        assert.deepEqual(payload, assertData)
+      })
+    })
+  })
 })
