@@ -1,3 +1,4 @@
+const _ = require('lodash')
 
 exports.parseData = (data) => {
   let parsed
@@ -18,9 +19,13 @@ exports.parseData = (data) => {
       config: false,
     }
 
-    for (let command of Object.keys(parsed[host])) {
-      let name = command.match(/\|-([^_]+)_\|/)[1]
-      out[host][name] = exports.parseEntry(name, parsed[host][command])
+    if (_.isArray(parsed[host])) {
+      out[host].error = parsed[host].join(' ')
+    } else {
+      for (let command of Object.keys(parsed[host])) {
+        let name = command.match(/\|-([^_]+)_\|/)[1]
+        out[host][name] = exports.parseEntry(name, parsed[host][command])
+      }
     }
   }
 

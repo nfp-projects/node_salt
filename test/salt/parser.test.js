@@ -14,6 +14,18 @@ describe('Salt (Parser)', () => {
       assert.strictEqual(out[assertHost].project, false)
       assert.strictEqual(out[assertHost].config, false)
     })
+
+    it('should handle errors in sls', () => {
+      let out = parser.parseData(`
+{
+    "master01.nfp.local": [
+        "Pillar failed to render with the following messages:",
+        "Specified SLS 'postgres' in environment 'base' is not available on the salt master"
+    ]
+}`)
+      assert.ok(out['master01.nfp.local'].error)
+      assert.match(out['master01.nfp.local'].error, /Pillar failed to/)
+    })
   })
 
   describe('#parseEntry()', () => {
