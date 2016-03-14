@@ -45,4 +45,5 @@ module.exports = (io, socket) => {
 
   register(context, 'manager.all_connections', manager.allConnections)
   register(context, 'deploy.latest', deploy.latest)
+  register(context, 'deploy.items', deploy.list)
 }

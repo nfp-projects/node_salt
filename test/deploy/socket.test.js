@@ -19,6 +19,7 @@ describe('Deploy (Server)', () => {
 
   let map = {
     'deploy.latest': 'latest',
+    'deploy.items': 'list',
   }
 
   Object.keys(map).forEach(key => {
